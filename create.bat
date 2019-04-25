@@ -2,21 +2,27 @@
 PROJECT_ID=nathan-project-1
 FOLDER=Test
 REGION=europe-west6
+#staging names
+L1=land
+L2=standardised
+L3=conformed
 
 echo $FOLDER
 echo $PROJECT_ID
 echo $PROJECT_ID"-raw"
 
 ##get the billing information
-gcloud beta billing accounts list 
+#gcloud beta billing accounts list 
 BILLING_ID=01D987-A6DE96-62A98D
 TESTFILE=genius_hip_hop_lyrics.csv
+
 
 echo $FOLDER
 echo $PROJECT_ID
 echo $PROJECT_ID"-raw"
 echo $BILLING_ID
 echo $TESTFILE
+echo $L1
 
 ##create folder and project
 ##gcloud alpha resource-manager folders create --display-name=$FOLDER
@@ -54,9 +60,7 @@ gsutil cp $TESTFILE gs://$PROJECT_ID"-raw"/
 # stand/x in bigquery
 
 
-L1=land
-L2=standardised
-L3=conformed
+
 bq rm $L1
 bq rm $L2
 bq rm $L1
