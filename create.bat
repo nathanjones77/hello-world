@@ -6,6 +6,9 @@ REGION=europe-west6
 L1=land
 L2=standardised
 L3=conformed
+srctgt=aschema
+
+
 
 echo $FOLDER
 echo $PROJECT_ID
@@ -76,7 +79,9 @@ mkdir $L1
 bq --location=$REGION load --autodetect --source_format=CSV $L1.$TESTTABLE gs://$PROJECT_ID"-raw"/$TESTFILE
 
 bq show --schema --format=prettyjson $PROJECT_ID:$L1.$TESTTABLE > $L1-$TESTTABLE.json
-
+#bq rm --table --f $L1.$SRCTGT
+bq --location=$REGION mk --table $PROJECT_ID:$L1.$SRCTGT $SRCTGT.json
+bq --location=$REGION show --schema --format=prettyjson --table $PROJECT_ID:$L1.$SRCTGT
 
 {
 "description": "audit column for load date",
