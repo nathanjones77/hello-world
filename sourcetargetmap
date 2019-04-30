@@ -17,3 +17,14 @@ jq --arg SRC "$TESTTABLE" ' [.[] |
 . + { "targetfieldbizrule" : "TBD" } |
 . + { "targetfieldnull" : "TBD" } |
 del(.description, .mode, .name, .type) ]' | jq -c ".[]"  > land/sourcetarget.json
+
+
+
+cat land/sourcetarget.json | 
+jq '[. |
+.["name"]=.targetfieldname | 
+.["mode"]="NULLABLE" |
+.["type"]=.targetfielddatatype |
+del(.targetfieldname, .sourcefieldname, .sourcetablename,.targettablename, .sourcefielddatatype, .targetfielddatatype, .sourcedataset, .targetdataset, .SourcePII, .targetfieldbizrule, .targetfieldnull )
+]' | jq '.'
+
