@@ -6,7 +6,7 @@ REGION=europe-west6
 L1=land
 L2=standardised
 L3=conformed
-SRCMGMT=aschema
+SRCMGT=aschema
 SRCTGT=sourcetarget
 
 
