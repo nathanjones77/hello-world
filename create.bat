@@ -50,34 +50,14 @@ mkdir $L1
 
 #load the test table into the landing area
 bq --location=$REGION load --autodetect --source_format=CSV $L1.$TESTTABLE gs://$PROJECT_ID"-raw"/$TESTFILE
-bq --location=$REGION load --source_format=NEWLINE_DELIMITED_JSON $L1.SRCTGT $L1/$SRCTGT.json
+bq --location=$REGION load --source_format=NEWLINE_DELIMITED_JSON  $L1.SRCMGT $L1/$SRCTGT.json
 
 bq show --schema --format=prettyjson $PROJECT_ID:$L1.$TESTTABLE > $L1/$TESTTABLE.json
 #bq rm --table --f $L1.$SRCTGT
-bq --location=$REGION mk --table $PROJECT_ID:$L1.$SRCTGT $SRCTGT.json
+bq --location=$REGION mk --table $PROJECT_ID:$L1.$SRCMGT $SRCMGT.json
 bq --location=$REGION show --schema --format=prettyjson --table $PROJECT_ID:$L1.$SRCTGT
 
-{
-"description": "audit column for load date",
-	"mode": "NULLABLE",
-	"name": "load_date",
-	"type": "datetime"
-},
-{"description": "audit column for load user",
-	"mode": "NULLABLE",
-	"name": "load_user",
-	"type": "string"
-},
-{"description": "audit column for GCP project",
-	"mode": "NULLABLE",
-	"name": "project_ID",
-	"type": "string"
-},
-{"description": "audit column for staging layer",
-	"mode": "NULLABLE",
-	"name": "staging_layer",
-	"type": "string"
-}
+
 
 
 
