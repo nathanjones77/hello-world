@@ -1,0 +1,17 @@
+## transform a schema.json into the data needed in the source target mapping
+
+cat aschema.json |
+jq '[.[] |
+.["allownulls"] = .mode|
+.["sourcefieldname"] = .name |
+. + { "sourcetablename" : "genius" } |
+.["sourcefielddatatype"]=.type |
+. + { "targettablename" : "targetgenius" } |
+.["targetfieldname"] =.name |
+.["targetfielddatatype"]=.type |
+. + { "sourcedataset" : "land" } |
+. + { "targetdataset" : "standardised" } |
+. + { "SourcePII" : false } |
+. + { "targetfieldbizrule" : false } |
+. + { "targetfieldnull" : false } |
+del(.mode, .name, .type) ]' > land/sourcetarget.json
