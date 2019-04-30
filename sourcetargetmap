@@ -1,17 +1,19 @@
 ## transform a schema.json into the data needed in the source target mapping
 
 cat aschema.json |
-jq '[.[] |
-.["allownulls"] = .mode|
-.["sourcefieldname"] = .name |
-. + { "sourcetablename" : "genius" } |
-.["sourcefielddatatype"]=.type |
-. + { "targettablename" : "targetgenius" } |
+TESTTABLE=genius_hip_hop_lyrics
+
+cat $TESTTABLE.json | 
+jq --arg SRC "$TESTTABLE" ' [.[] |                                                                               
+.["sourcefieldname"] = .name |                                                                                                                                                                    
+. + { "sourcetablename" : $SRC } |                                                                                                                   
+. + { "targettablename" : $SRC } |
 .["targetfieldname"] =.name |
+.["sourcefielddatatype"]=.type |
 .["targetfielddatatype"]=.type |
 . + { "sourcedataset" : "land" } |
 . + { "targetdataset" : "standardised" } |
-. + { "SourcePII" : false } |
-. + { "targetfieldbizrule" : false } |
-. + { "targetfieldnull" : false } |
-del(.mode, .name, .type) ]' > land/sourcetarget.json
+. + { "SourcePII" : "TBD" } |
+. + { "targetfieldbizrule" : "TBD" } |
+. + { "targetfieldnull" : "TBD" } |
+del(.description, .mode, .name, .type) ]' | jq -c ".[]"  > land/sourcetarget.json
