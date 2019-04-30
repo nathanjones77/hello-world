@@ -1,31 +1,4 @@
 
-PROJECT_ID=nathan-project-1
-FOLDER=Test
-REGION=europe-west6
-#staging names
-L1=land
-L2=standardised
-L3=conformed
-srctgt=aschema
-
-
-
-echo $FOLDER
-echo $PROJECT_ID
-echo $PROJECT_ID"-raw"
-
-##get the billing information
-#gcloud beta billing accounts list 
-BILLING_ID=01D987-A6DE96-62A98D
-TESTFILE=genius_hip_hop_lyrics.csv
-
-
-echo $FOLDER
-echo $PROJECT_ID
-echo $PROJECT_ID"-raw"
-echo $BILLING_ID
-echo $TESTFILE
-echo $L1
 
 ##create folder and project
 ##gcloud alpha resource-manager folders create --display-name=$FOLDER
@@ -77,6 +50,7 @@ mkdir $L1
 
 #load the test table into the landing area
 bq --location=$REGION load --autodetect --source_format=CSV $L1.$TESTTABLE gs://$PROJECT_ID"-raw"/$TESTFILE
+bq --location=$REGION load --source_format=NEWLINE_DELIMITED_JSON $L1.SRCTGT $L1/$SRCTGT.json
 
 bq show --schema --format=prettyjson $PROJECT_ID:$L1.$TESTTABLE > $L1/$TESTTABLE.json
 #bq rm --table --f $L1.$SRCTGT
