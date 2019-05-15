@@ -41,6 +41,8 @@ bq rm $L1
 bq rm $L2
 bq rm $L1
 bq --location=$REGION mk --dataset  --description "landing area for staging data on the way into big query from cloud storage" $PROJECT_ID:$L1
+bq --location=$REGION mk --dataset  --description "area with standarised column and table names and added lookups" $PROJECT_ID:$L2
+
 bq mk $L2
 mkdir $L1
 
