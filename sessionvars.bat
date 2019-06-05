@@ -8,7 +8,7 @@ L2=standardised
 L3=conformed
 SRCMGT=aschema
 SRCTGT=sourcetarget
-BUCKET=PROJECT_ID"-raw"
+BUCKET=$PROJECT_ID"-raw"
 
 
 
